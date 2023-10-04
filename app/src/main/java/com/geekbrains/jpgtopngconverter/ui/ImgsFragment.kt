@@ -65,8 +65,15 @@ class ImgsFragment : MvpAppCompatFragment(), ImgsView {
             if (it.resultCode == RESULT_OK) {
                 it.data?.data?.let { uri ->
                     binding.imagePicked.setImageURI(uri)
-                    binding.textPathImagePicked.text = presenter.getPathFromUri(
+                    val imagePath = presenter.getPathFromUri(
                         requireContext().contentResolver, uri) as CharSequence
+                    if (presenter.imageIsJPG(imagePath)) {
+                        binding.textPathImagePicked.text = imagePath
+                    }
+                    else {
+                        Toast.makeText(requireContext(), getString(R.string.jpg),
+                            Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

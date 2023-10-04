@@ -6,7 +6,6 @@ import com.geekbrains.jpgtopngconverter.mvp.ImageConverter
 import com.geekbrains.jpgtopngconverter.mvp.view.ImgsView
 import android.graphics.Bitmap
 import android.net.Uri
-import com.geekbrains.jpgtopngconverter.ui.DataUtils
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -42,6 +41,8 @@ class ImgsPresenter(): MvpPresenter<ImgsView>(), IImgsPresenter {
     }
 
     fun getValidatePath(textPath: CharSequence?) = DataUtils.getValidatePath(textPath)
+
+    fun imageIsJPG(imagePath: CharSequence?) = DataUtils.getImageFormat(imagePath) == "jpg"
 
     fun getPathFromUri(contentResolver: ContentResolver, contentUri: Uri)
         = DataUtils.getPathFromUri(contentResolver, contentUri)

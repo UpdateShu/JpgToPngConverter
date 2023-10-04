@@ -1,4 +1,4 @@
-package com.geekbrains.jpgtopngconverter.ui
+package com.geekbrains.jpgtopngconverter.mvp.presenter
 
 import android.net.Uri
 import android.content.ContentResolver
@@ -9,6 +9,14 @@ object DataUtils {
     fun getValidatePath(textPath: CharSequence?) : String?  {
         textPath?.toString()?.let {
             return if (!it.isEmpty()) it else null
+        }
+        return null
+    }
+
+    fun getImageFormat(imagePath: CharSequence?) : String? {
+        imagePath?.let {
+            val dotIndex = it.lastIndexOf('.')
+            return if (dotIndex != -1) it.substring(dotIndex + 1) else null
         }
         return null
     }
