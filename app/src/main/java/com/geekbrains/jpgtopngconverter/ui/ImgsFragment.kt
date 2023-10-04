@@ -19,6 +19,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
+import com.geekbrains.jpgtopngconverter.R
 
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -49,7 +50,8 @@ class ImgsFragment : MvpAppCompatFragment(), ImgsView {
             presenter.imgSelectionListener?.invoke()
         }
         binding.buttonConvert.setOnClickListener {
-            if (binding.textPathImagePicked.text.isEmpty())
+            val path = presenter.getValidatePath(binding.textPathImagePicked.text)
+            if (path.isNullOrEmpty())
                 return@setOnClickListener
 
             (activity as MainViewImpl).checkPermissions()
@@ -57,17 +59,14 @@ class ImgsFragment : MvpAppCompatFragment(), ImgsView {
             Log.d("MyThread", Thread.currentThread().name)
 
             presenter.imgConversionListener?.invoke(
-                (binding.imagePicked.drawable as BitmapDrawable).bitmap,
-                binding.textPathImagePicked.text.toString()
-            )
+                (binding.imagePicked.drawable as BitmapDrawable).bitmap, path)
         }
         openGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
                 it.data?.data?.let { uri ->
                     binding.imagePicked.setImageURI(uri)
-                    binding.textPathImagePicked.text = getPathFromUri(
-                        requireContext().contentResolver, uri
-                    )
+                    binding.textPathImagePicked.text = presenter.getPathFromUri(
+                        requireContext().contentResolver, uri) as CharSequence
                 }
             }
         }

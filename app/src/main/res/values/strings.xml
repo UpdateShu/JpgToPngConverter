@@ -4,5 +4,6 @@
     <string name="converted_photo_path_txt">Converted photo path</string>
     <string name="convert_to_png_btn">Convert to png</string>
     <string name="select_jpg_btn">Select jpg</string>
+    <string name="Repeat_message">Файл уже выбран!</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
